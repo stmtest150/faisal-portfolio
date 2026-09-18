@@ -15,11 +15,6 @@ const currentYear = document.getElementById("currentYear");
 
 const emailAddress = "faisalraheem432@gmail.com";
 
-
-/* =========================
-   Theme Management
-========================= */
-
 function getPreferredTheme() {
   const savedTheme = localStorage.getItem("portfolio-theme");
 
@@ -71,11 +66,6 @@ themeToggle?.addEventListener("click", () => {
   setTheme(nextTheme);
 });
 
-
-/* =========================
-   Navbar Scroll Effect
-========================= */
-
 function handleNavbarScroll() {
   if (!navbar) return;
 
@@ -87,13 +77,7 @@ function handleNavbarScroll() {
 }
 
 window.addEventListener("scroll", handleNavbarScroll);
-
 handleNavbarScroll();
-
-
-/* =========================
-   Scroll Progress
-========================= */
 
 function updateScrollProgress() {
   const scrollTop = window.scrollY;
@@ -113,13 +97,7 @@ function updateScrollProgress() {
 }
 
 window.addEventListener("scroll", updateScrollProgress);
-
 updateScrollProgress();
-
-
-/* =========================
-   Back To Top
-========================= */
 
 function handleBackToTop() {
   if (!backToTop) return;
@@ -141,12 +119,6 @@ backToTop?.addEventListener("click", () => {
 });
 
 handleBackToTop();
-
-
-/* =========================
-   Scroll Reveal
-========================= */
-
 const revealElements = document.querySelectorAll(".reveal");
 
 const revealObserver = new IntersectionObserver(
@@ -166,11 +138,6 @@ const revealObserver = new IntersectionObserver(
 revealElements.forEach((element) => {
   revealObserver.observe(element);
 });
-
-
-/* =========================
-   Active Navbar Link
-========================= */
 
 const sections = document.querySelectorAll("section[id], header[id]");
 const navLinks = document.querySelectorAll(".nav-link");
@@ -205,11 +172,6 @@ window.addEventListener("scroll", updateActiveNavLink);
 
 updateActiveNavLink();
 
-
-/* =========================
-   Close Mobile Navbar
-========================= */
-
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
     const navbarCollapse = document.getElementById("mainNav");
@@ -226,11 +188,6 @@ navLinks.forEach((link) => {
     }
   });
 });
-
-
-/* =========================
-   Project Filtering
-========================= */
 
 const filterButtons = document.querySelectorAll(".filter-btn");
 const projectItems = document.querySelectorAll(".project-item");
@@ -261,11 +218,6 @@ filterButtons.forEach((button) => {
     });
   });
 });
-
-
-/* =========================
-   Copy Email
-========================= */
 
 copyEmailButton?.addEventListener("click", async () => {
   try {
