@@ -318,6 +318,15 @@
                     <div class="hero-actions d-flex flex-wrap gap-3 mb-5 justify-content-center justify-content-lg-start">
                         <a href="#projects" class="btn btn-primary btn-lg px-4">Explore Work →</a>
                         <a href="#contact" class="btn btn-outline-secondary btn-lg px-4">Let's Connect</a>
+                     <a href="files/FaisalRaheemResume.pdf" 
+       download="Faisal-Raheem-Baloch-Resume.pdf"
+       class="btn btn-lg px-4 btn-resume">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="18" height="18">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        Download Resume
+    </a>
                     </div>
 
                     <div class="hero-socials d-flex flex-wrap align-items-center gap-4 justify-content-center justify-content-lg-start">
@@ -983,7 +992,6 @@ const FORMSUBMIT_URL = "https://formsubmit.co/ajax/b2f4b54bf180b0799d5e6a198d87a
                 const result = await response.json();
 
                 if (response.ok && result.success !== false) {
-                    // Success state
                     sendBtn.classList.remove("loading");
                     sendBtn.classList.add("success");
                     sendBtn.querySelector(".btn-send-icon-s").innerHTML = CHECK_ICON;
@@ -1020,10 +1028,6 @@ const FORMSUBMIT_URL = "https://formsubmit.co/ajax/b2f4b54bf180b0799d5e6a198d87a
                 );
             }
         });
-
-        /* =====================================================
-           COPY EMAIL
-        ===================================================== */
         document.getElementById("copyEmail")?.addEventListener("click", async () => {
             const btn = document.getElementById("copyEmail");
             try {
