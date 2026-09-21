@@ -80,12 +80,92 @@
         .profile-placeholder { position: relative; width: 340px; height: 340px; border-radius: 50%; border: 6px solid #fff; background: var(--brand-grad); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 5rem; font-weight: 900; font-family: monospace; box-shadow: 0 25px 60px rgba(13, 110, 253, 0.3); z-index: 1; }
         [data-bs-theme="dark"] .profile-placeholder { border-color: #1e293b; }
 
-        .floating-chip { position: absolute; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 100px; font-size: 0.82rem; font-weight: 700; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); animation: float 5s ease-in-out infinite; z-index: 2; }
-        [data-bs-theme="dark"] .floating-chip { background: rgba(30, 41, 59, 0.9); border-color: rgba(255, 255, 255, 0.08); }
-        .floating-chip svg { width: 16px; height: 16px; fill: var(--bs-primary); }
-        .chip-1 { top: 4%; right: 5%; }
-        .chip-2 { bottom: 26%; right: -6%; animation-delay: 1.5s; }
-        .chip-3 { bottom: 6%; left: 0; animation-delay: 3s; }
+       .floating-chip {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    animation: float 5s ease-in-out infinite;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+}
+
+[data-bs-theme="dark"] .floating-chip {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Icon color = chip's brand color */
+.floating-chip svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--chip-color, #0d6efd);
+    fill: var(--chip-color, #0d6efd);
+    transition: transform 0.35s ease;
+}
+
+.floating-chip span {
+    color: var(--bs-body-color);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Hover effect */
+.floating-chip:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+    border-color: var(--chip-color, #0d6efd);
+}
+
+.floating-chip:hover svg {
+    transform: rotate(-10deg) scale(1.15);
+}
+
+/* ============================================
+   CHIP POSITIONS (4 corners)
+=========================================== */
+
+/* Chip 1: .NET — Top Right (Purple) */
+.chip-1 {
+    top: 4%;
+    right: 5%;
+    animation-delay: 0s;
+    --chip-color: #512bd4;
+}
+
+/* Chip 2: React — Top Left (Cyan) */
+.chip-2 {
+    top: 8%;
+    left: -5%;
+    animation-delay: 1.2s;
+    --chip-color: #61dafb;
+}
+
+/* Chip 3: Angular — Bottom Right (Red) */
+.chip-3 {
+    bottom: 18%;
+    right: -8%;
+    animation-delay: 2.4s;
+    --chip-color: #dd0031;
+}
+
+/* Chip 4: SQL — Bottom Left (Blue) */
+.chip-4 {
+    bottom: 6%;
+    left: 0;
+    animation-delay: 3.6s;
+    --chip-color: #00758f;
+}
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
         .stat-number { font-size: 1.6rem; font-weight: 900; line-height: 1; background: var(--brand-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -353,18 +433,43 @@
                     <div class="profile-wrap d-flex justify-content-center position-relative">
                         <img src="images/Faisal.png" alt="Faisal Raheem Baloch" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="profile-placeholder" style="display:none;">FRB</div>
-                        <div class="floating-chip chip-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"/></svg>
-                            .NET
-                        </div>
-                        <div class="floating-chip chip-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2"/><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg>
-                            React
-                        </div>
-                        <div class="floating-chip chip-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.318 2.687C.654 4.769 0 6.5 0 8s.654 3.231 4.318 5.313c1.696.926 4.014 1.687 7.682 1.687 1.348 0 2.6-.14 3.756-.377A1.002 1.002 0 0 0 16 13.65V2.35a1 1 0 0 0-.744-.973C14.1 1.14 12.848 1 11.5 1c-3.668 0-5.986.761-7.182 1.687z"/></svg>
-                            SQL
-                        </div>
+                     <div class="floating-chip chip-1" style="--chip-color: #512bd4;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M12 2L2 19.5h20L12 2zm0 3.5l6.5 11.5h-13L12 5.5z"/>
+            <path d="M7 22h2v1.5H7zm4 0h2v1.5h-2zm4 0h2v1.5h-2z"/>
+        </svg>
+        <span>.NET</span>
+    </div>
+
+    <!-- ============ CHIP 2: React (Top Left - Cyan) ============ -->
+    <div class="floating-chip chip-2" style="--chip-color: #61dafb;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="16" height="16">
+            <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>
+        </svg>
+        <span>React</span>
+    </div>
+
+    <!-- ============ CHIP 3: Angular (Bottom Right - Red) ============ -->
+    <div class="floating-chip chip-3" style="--chip-color: #dd0031;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M12 2L2 5l1.5 16L12 24l8.5-3L22 5 12 2zm0 2.5L19.5 6l-1 12L12 20.5 5.5 18l-1-12L12 4.5z"/>
+            <path d="M12 7l-4 9h2l.8-2h2.4l.8 2h2l-4-9zm0 2.4L13 13h-2l1-3.6z"/>
+        </svg>
+        <span>Angular</span>
+    </div>
+
+    <!-- ============ CHIP 4: SQL (Bottom Left - Blue) ============ -->
+    <div class="floating-chip chip-4" style="--chip-color: #00758f;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <ellipse cx="12" cy="5" rx="8" ry="3"/>
+            <path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5c0 1.7-3.6 3-8 3S4 6.7 4 5z"/>
+            <path d="M4 13v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6c0 1.7-3.6 3-8 3s-8-1.3-8-3z"/>
+        </svg>
+        <span>SQL</span>
+    </div>
                     </div>
                 </div>
             </div>
