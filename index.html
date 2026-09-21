@@ -1,305 +1,753 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Faisal Raheem Baloch - Software Engineer | .NET, ASP.NET Core, Angular, React Full-Stack Developer">
+    <meta name="description" content="Faisal Raheem Baloch - Software Engineer | .NET, ASP.NET Core, Angular, React">
     <meta name="author" content="Faisal Raheem Baloch">
-    <meta name="theme-color" content="#0a0e1a">
+    <meta name="theme-color" content="#ffffff">
     <title>Faisal Raheem Baloch — Software Engineer</title>
 
-    <!-- Local Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Local Bootstrap Icons -->
-    <link rel="stylesheet" href="css/bootstrap-icons.min.css">
-    <!-- Google Fonts (optional, local bhi rakh sakte ho) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           DESIGN TOKENS
+        ============================================ */
+        :root {
+            --bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --brand-grad: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+            --brand-grad-soft: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(102, 16, 242, 0.08));
+            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.06);
+            --shadow-lg: 0 20px 50px rgba(15, 23, 42, 0.08);
+            --shadow-glow: 0 12px 32px rgba(13, 110, 253, 0.18);
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --t-med: 0.35s var(--ease);
+        }
+
+        [data-bs-theme="dark"] {
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 12px 32px rgba(13, 110, 253, 0.25);
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { font-family: var(--bs-body-font-family); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+        #scrollProgress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--brand-grad); z-index: 9999; transition: width 0.1s linear; }
+
+        /* Navbar */
+        .navbar { padding: 14px 0; transition: all var(--t-med); background: rgba(255, 255, 255, 0.85) !important; backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid transparent; }
+        [data-bs-theme="dark"] .navbar { background: rgba(15, 18, 25, 0.85) !important; }
+        .navbar.scrolled { box-shadow: var(--shadow-sm); border-bottom-color: var(--bs-border-color); }
+        .navbar-brand .brand-mark { width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-grad); color: #fff; border-radius: 11px; font-family: monospace; font-size: 0.85rem; font-weight: 800; box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3); }
+
+        .nav-link { font-weight: 500; position: relative; padding: 8px 14px !important; border-radius: 8px; transition: all 0.2s ease; }
+        .nav-link:hover { background: var(--bs-tertiary-bg); }
+        .nav-link.active { color: var(--bs-primary) !important; font-weight: 700; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: 2px; left: 14px; right: 14px; height: 2px; background: var(--brand-grad); border-radius: 2px; }
+
+        .theme-toggle { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--bs-border-color); background: var(--bs-body-bg); color: var(--bs-body-color); display: inline-flex; align-items: center; justify-content: center; transition: all var(--t-med); }
+        .theme-toggle:hover { color: var(--bs-primary); border-color: var(--bs-primary); transform: rotate(180deg) scale(1.05); box-shadow: var(--shadow-glow); }
+
+        /* Hero */
+        .hero { min-height: 100vh; padding-top: 110px; padding-bottom: 60px; display: flex; align-items: center; position: relative; overflow: hidden; background: radial-gradient(circle at 15% 20%, rgba(13, 110, 253, 0.10), transparent 40%), radial-gradient(circle at 85% 15%, rgba(102, 16, 242, 0.08), transparent 45%), linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); }
+        [data-bs-theme="dark"] .hero { background: radial-gradient(circle at 15% 20%, rgba(13, 110, 253, 0.15), transparent 40%), radial-gradient(circle at 85% 15%, rgba(102, 16, 242, 0.12), transparent 45%), linear-gradient(180deg, #0f1219 0%, #0a0e15 100%); }
+        .hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(13, 110, 253, 0.18) 1px, transparent 1px); background-size: 32px 32px; mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%); opacity: 0.5; pointer-events: none; }
+
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255, 255, 255, 0.9); color: var(--bs-primary); border: 1px solid rgba(13, 110, 253, 0.2); border-radius: 100px; font-size: 0.82rem; font-weight: 600; box-shadow: var(--shadow-sm); }
+        [data-bs-theme="dark"] .hero-badge { background: rgba(30, 41, 59, 0.6); }
+
+        .badge-dot { width: 8px; height: 8px; background: #198754; border-radius: 50%; box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.15); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px rgba(25,135,84,0.15); } 50% { box-shadow: 0 0 0 8px rgba(25,135,84,0.05); } }
+
+        .hero-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; }
+        .gradient-text { background: var(--brand-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .role-cursor { display: inline-block; animation: blink 1s step-end infinite; color: var(--bs-primary); }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .profile-wrap { position: relative; display: inline-block; }
+        .profile-wrap::before { content: ""; position: absolute; inset: -20px; background: var(--brand-grad); border-radius: 50%; opacity: 0.15; filter: blur(40px); z-index: 0; }
+        .profile-img { position: relative; width: 340px; height: 340px; object-fit: cover; border-radius: 50%; border: 6px solid #fff; box-shadow: 0 25px 60px rgba(13, 110, 253, 0.22), 0 10px 25px rgba(0, 0, 0, 0.08); z-index: 1; }
+        [data-bs-theme="dark"] .profile-img { border-color: #1e293b; }
+
+        .profile-placeholder { position: relative; width: 340px; height: 340px; border-radius: 50%; border: 6px solid #fff; background: var(--brand-grad); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 5rem; font-weight: 900; font-family: monospace; box-shadow: 0 25px 60px rgba(13, 110, 253, 0.3); z-index: 1; }
+        [data-bs-theme="dark"] .profile-placeholder { border-color: #1e293b; }
+
+        .floating-chip { position: absolute; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 100px; font-size: 0.82rem; font-weight: 700; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12); animation: float 5s ease-in-out infinite; z-index: 2; }
+        [data-bs-theme="dark"] .floating-chip { background: rgba(30, 41, 59, 0.9); border-color: rgba(255, 255, 255, 0.08); }
+        .floating-chip svg { width: 16px; height: 16px; fill: var(--bs-primary); }
+        .chip-1 { top: 4%; right: 5%; }
+        .chip-2 { bottom: 26%; right: -6%; animation-delay: 1.5s; }
+        .chip-3 { bottom: 6%; left: 0; animation-delay: 3s; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+        .stat-number { font-size: 1.6rem; font-weight: 900; line-height: 1; background: var(--brand-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        .social-btn { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border-radius: 14px; background: var(--bs-body-bg); border: 1.5px solid var(--bs-border-color); color: var(--bs-body-color); transition: all var(--t-med); box-shadow: var(--shadow-sm); text-decoration: none; }
+        .social-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .social-btn:hover { color: #fff; border-color: transparent; transform: translateY(-3px); box-shadow: var(--shadow-glow); background: var(--brand-grad); }
+
+        .section-eyebrow { display: inline-block; font-size: 0.78rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; background: var(--brand-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .section-title { font-size: clamp(1.85rem, 4vw, 2.75rem); font-weight: 900; letter-spacing: -1px; line-height: 1.15; }
+
+        .card-premium { position: relative; background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 20px; transition: all var(--t-med); overflow: hidden; height: 100%; }
+        .card-premium::before { content: ""; position: absolute; inset: 0; background: var(--brand-grad-soft); opacity: 0; transition: opacity var(--t-med); pointer-events: none; }
+        .card-premium:hover::before { opacity: 1; }
+        .card-premium > * { position: relative; z-index: 1; }
+        .card-premium:hover { transform: translateY(-6px); border-color: rgba(13, 110, 253, 0.3); box-shadow: var(--shadow-lg); }
+
+        .icon-box { width: 60px; height: 60px; display: inline-flex; align-items: center; justify-content: center; border-radius: 16px; background: var(--brand-grad-soft); color: var(--bs-primary); position: relative; overflow: hidden; }
+        .icon-box svg { width: 28px; height: 28px; fill: currentColor; position: relative; z-index: 1; transition: all var(--t-med); }
+        .icon-box::before { content: ""; position: absolute; inset: 0; background: var(--brand-grad); opacity: 0; transition: opacity var(--t-med); }
+        .card-premium:hover .icon-box::before { opacity: 1; }
+        .card-premium:hover .icon-box svg { fill: #fff; }
+
+        .icon-box-sm { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--brand-grad-soft); color: var(--bs-primary); flex-shrink: 0; }
+        .icon-box-sm svg { width: 22px; height: 22px; fill: currentColor; }
+
+        .btn-primary { background: var(--brand-grad); border: none; font-weight: 700; padding: 12px 26px; border-radius: 12px; box-shadow: 0 6px 20px rgba(13, 110, 253, 0.25); transition: all var(--t-med); display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: #fff; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(13, 110, 253, 0.35); color: #fff; background: var(--brand-grad); }
+
+        .btn-outline-secondary { font-weight: 700; padding: 12px 26px; border-radius: 12px; border: 1.5px solid var(--bs-border-color); background: var(--bs-body-bg); color: var(--bs-body-color); transition: all var(--t-med); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-outline-secondary:hover { border-color: var(--bs-primary); color: var(--bs-primary); background: var(--bs-body-bg); transform: translateY(-3px); }
+
+        .filter-btn { padding: 9px 22px; border-radius: 100px; border: 1.5px solid var(--bs-border-color); background: var(--bs-body-bg); color: var(--bs-body-color); font-size: 0.87rem; font-weight: 600; transition: all var(--t-med); }
+        .filter-btn:hover { border-color: var(--bs-primary); color: var(--bs-primary); }
+        .filter-btn.active { background: var(--brand-grad); color: #fff; border-color: transparent; }
+
+        /* Contact */
+        .contact-info-panel { padding: 32px; background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 28px; height: 100%; box-shadow: var(--shadow-md); position: relative; overflow: hidden; }
+
+        .contact-info-card { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 14px; text-decoration: none; color: inherit; transition: all var(--t-med); position: relative; overflow: hidden; }
+        .contact-info-card:hover { border-color: rgba(13, 110, 253, 0.3); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+        .cic-icon { width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--brand-grad-soft); color: var(--bs-primary); border-radius: 12px; }
+        .cic-icon svg { width: 22px; height: 22px; fill: currentColor; }
+        .contact-info-card:hover .cic-icon { background: var(--brand-grad); color: #fff; }
+
+        .cic-linkedin { background: rgba(10, 102, 194, 0.1); color: #0a66c2; }
+        .contact-info-card:hover .cic-linkedin { background: #0a66c2; color: #fff; }
+        .cic-github { background: rgba(51, 51, 51, 0.1); color: #333; }
+        [data-bs-theme="dark"] .cic-github { background: rgba(255,255,255,0.08); color: #e6e6e6; }
+        .contact-info-card:hover .cic-github { background: #333; color: #fff; }
+        [data-bs-theme="dark"] .contact-info-card:hover .cic-github { background: #e6e6e6; color: #111; }
+        .cic-location { background: rgba(25, 135, 84, 0.1); color: #198754; }
+        .contact-info-card:hover .cic-location { background: #198754; color: #fff; }
+
+        .cic-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+        .cic-label { font-size: 0.7rem; font-weight: 700; color: var(--bs-secondary-color); text-transform: uppercase; letter-spacing: 0.8px; }
+        .cic-value { font-size: 0.9rem; font-weight: 600; color: var(--bs-body-color); overflow-wrap: anywhere; line-height: 1.35; }
+        a.contact-info-card:hover .cic-value { color: var(--bs-primary); }
+
+        .cic-copy { width: 40px; height: 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: transparent; border: 1.5px solid var(--bs-border-color); border-radius: 10px; color: var(--bs-secondary-color); cursor: pointer; transition: all var(--t-med); }
+        .cic-copy svg { width: 18px; height: 18px; fill: currentColor; }
+        .cic-copy:hover { color: var(--bs-primary); border-color: var(--bs-primary); }
+        .cic-copy.success { color: #198754; border-color: #198754; }
+
+        .cic-arrow { width: 34px; height: 34px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: transparent; border: 1.5px solid var(--bs-border-color); border-radius: 50%; color: var(--bs-secondary-color); }
+        .cic-arrow svg { width: 14px; height: 14px; fill: currentColor; }
+
+        .cic-badge { padding: 5px 11px; background: rgba(25, 135, 84, 0.1); color: #198754; border: 1px solid rgba(25, 135, 84, 0.25); border-radius: 100px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
+
+        .contact-form-card { padding: 36px; background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 28px; box-shadow: var(--shadow-md); }
+
+        .form-header { display: flex; align-items: center; gap: 16px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--bs-border-color); }
+        .form-header-icon { width: 54px; height: 54px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--brand-grad); color: #fff; border-radius: 15px; box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3); }
+        .form-header-icon svg { width: 26px; height: 26px; fill: currentColor; }
+
+        .form-label { font-size: 0.82rem; font-weight: 700; margin-bottom: 8px; }
+        .input-group-custom { position: relative; }
+        .input-group-custom .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--bs-secondary-color); pointer-events: none; z-index: 2; }
+        .input-group-custom .input-icon svg { width: 18px; height: 18px; fill: currentColor; }
+        .input-group-custom .textarea-icon { top: 18px; transform: none; }
+        .input-group-custom .form-control { padding: 12px 16px 12px 46px; background: var(--bs-tertiary-bg); border: 1.5px solid var(--bs-border-color); border-radius: 12px; font-size: 0.92rem; color: var(--bs-body-color); }
+        .input-group-custom textarea.form-control { padding-top: 14px; min-height: 130px; resize: vertical; }
+        .input-group-custom .form-control:focus { background: var(--bs-body-bg); border-color: var(--bs-primary); box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.12); outline: none; }
+        .input-group-custom .form-control::placeholder { color: var(--bs-secondary-color); opacity: 0.7; }
+
+        /* Send button */
+        .btn-send-submit { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; padding: 18px 24px; background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%); color: #fff; border: none; border-radius: 14px; font-weight: 700; font-size: 1rem; cursor: pointer; position: relative; overflow: hidden; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(13, 110, 253, 0.3); }
+        .btn-send-submit::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, #6610f2 0%, #0d6efd 100%); opacity: 0; transition: opacity 0.35s ease; }
+        .btn-send-submit > * { position: relative; z-index: 1; }
+        .btn-send-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(13, 110, 253, 0.45); }
+        .btn-send-submit:hover::before { opacity: 1; }
+        .btn-send-submit:active { transform: translateY(-1px); }
+
+        .btn-send-icon-s { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.18); border-radius: 11px; flex-shrink: 0; transition: all 0.3s ease; }
+        .btn-send-submit:hover .btn-send-icon-s { background: rgba(255, 255, 255, 0.28); transform: scale(1.05); }
+        .btn-send-icon-s svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .btn-send-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; text-align: left; }
+        .btn-send-text strong { font-size: 0.98rem; font-weight: 700; }
+        .btn-send-text small { font-size: 0.75rem; font-weight: 500; opacity: 0.85; margin-top: 1px; }
+
+        .btn-send-submit.loading { pointer-events: none; opacity: 0.9; }
+        .btn-send-submit.loading .btn-send-icon-s { background: transparent; }
+
+        .spinner-loader { width: 22px; height: 22px; border: 2.5px solid rgba(255, 255, 255, 0.3); border-top-color: #fff; border-radius: 50%; animation: spinLoader 0.8s linear infinite; display: inline-block; }
+        @keyframes spinLoader { to { transform: rotate(360deg); } }
+
+        .btn-send-submit.success { background: linear-gradient(135deg, #198754 0%, #20c997 100%); box-shadow: 0 10px 30px rgba(25, 135, 84, 0.3); pointer-events: none; }
+        .btn-send-submit.success .btn-send-icon-s { background: rgba(255, 255, 255, 0.2); }
+
+        .form-footer { display: flex; align-items: center; gap: 8px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--bs-border-color); font-size: 0.8rem; color: var(--bs-secondary-color); }
+        .form-footer svg { width: 16px; height: 16px; fill: #198754; flex-shrink: 0; }
+
+        /* Toast */
+        .success-toast { position: fixed; top: 90px; right: 24px; z-index: 10000; display: flex; align-items: center; gap: 14px; padding: 16px 22px; background: #ffffff; border: 1.5px solid rgba(25, 135, 84, 0.25); border-left: 4px solid #198754; border-radius: 14px; box-shadow: 0 20px 50px rgba(25, 135, 84, 0.2), 0 8px 20px rgba(0, 0, 0, 0.08); max-width: 380px; transform: translateX(calc(100% + 40px)); opacity: 0; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; }
+        [data-bs-theme="dark"] .success-toast { background: #1a2440; border-color: rgba(25, 135, 84, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+        .success-toast.show { transform: translateX(0); opacity: 1; pointer-events: auto; }
+        .success-toast .toast-icon { width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #198754, #20c997); color: #fff; border-radius: 12px; box-shadow: 0 6px 16px rgba(25, 135, 84, 0.3); }
+        .success-toast.show .toast-icon { animation: successPop 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .success-toast .toast-icon svg { width: 22px; height: 22px; fill: currentColor; }
+        .success-toast .toast-content { flex: 1; min-width: 0; }
+        .success-toast .toast-title { font-size: 0.95rem; font-weight: 800; color: #0f5132; margin-bottom: 2px; }
+        [data-bs-theme="dark"] .success-toast .toast-title { color: #75d6a5; }
+        .success-toast .toast-message { font-size: 0.82rem; color: #198754; font-weight: 500; }
+        .success-toast .toast-close { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--bs-secondary-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+        .success-toast .toast-close:hover { background: rgba(25, 135, 84, 0.1); color: #198754; }
+        .success-toast .toast-close svg { width: 16px; height: 16px; fill: currentColor; }
+        @keyframes successPop { 0% { transform: scale(0.5); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--bs-border-color); background: var(--bs-body-bg); }
+        .back-to-top { width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--brand-grad); color: #fff; border: none; box-shadow: var(--shadow-glow); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all var(--t-med); }
+        .back-to-top svg { width: 20px; height: 20px; fill: currentColor; }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { transform: translateY(-4px) scale(1.05); }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+        .reveal.show { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 991px) {
+            .hero { text-align: center; padding-top: 120px; }
+            .hero-actions, .hero-socials, .hero-stats { justify-content: center !important; }
+            .profile-img, .profile-placeholder { width: 260px !important; height: 260px !important; margin-top: 40px; font-size: 3.5rem; }
+            .floating-chip { display: none; }
+            .nav-link.active::after { display: none; }
+            .contact-info-panel, .contact-form-card { padding: 26px; }
+        }
+
+        @media (max-width: 575px) {
+            .contact-info-panel, .contact-form-card { padding: 22px 18px; }
+            .btn-send-submit { padding: 15px 18px; gap: 12px; }
+            .btn-send-icon-s { width: 38px; height: 38px; }
+            .btn-send-text strong { font-size: 0.9rem; }
+            .btn-send-text small { font-size: 0.7rem; }
+            .success-toast { top: 80px; right: 16px; left: 16px; max-width: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="preloader-inner">
-            <div class="pl-logo">
-                <span>F</span><span>R</span><span>B</span>
-            </div>
-            <div class="pl-ring"></div>
-            <p class="pl-text">Initializing Experience...</p>
-        </div>
-    </div>
-
-    <!-- Background Effects -->
-    <div class="bg-effects">
-        <div class="bg-orb bg-orb-1"></div>
-        <div class="bg-orb bg-orb-2"></div>
-        <div class="bg-orb bg-orb-3"></div>
-        <div class="bg-grid"></div>
-        <div class="bg-noise"></div>
-    </div>
-
-    <!-- Scroll Progress -->
     <div id="scrollProgress"></div>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-ring" data-cursor-ring></div>
-
-    <!-- ==================== NAVBAR ==================== -->
+    <!-- NAVBAR -->
     <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-
-            <a class="navbar-brand" href="#home">
-                <div class="brand-box">
-                    <span class="brand-bracket">&lt;</span>
-                    <span class="brand-initials">FRB</span>
-                    <span class="brand-bracket">/&gt;</span>
-                </div>
-                <div class="brand-text">
-                    <strong>Faisal R. Baloch</strong>
-                    <small>Software Engineer</small>
+            <a class="navbar-brand d-flex align-items-center gap-3" href="#home">
+                <span class="brand-mark">&lt;/&gt;</span>
+                <div class="lh-1">
+                    <div class="fw-bold">Faisal R. Baloch</div>
+                    <small class="text-body-secondary fw-normal" style="font-size: 0.72rem;">Software Engineer</small>
                 </div>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="toggler-line"></span>
-                <span class="toggler-line"></span>
-                <span class="toggler-line"></span>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                    <li class="nav-item"><a class="nav-link active" href="#home" data-nav="home"><i class="bi bi-house-door"></i><span>Home</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about" data-nav="about"><i class="bi bi-person"></i><span>About</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills" data-nav="skills"><i class="bi bi-lightning-charge"></i><span>Skills</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects" data-nav="projects"><i class="bi bi-briefcase"></i><span>Projects</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services" data-nav="services"><i class="bi bi-gear"></i><span>Services</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact" data-nav="contact"><i class="bi bi-send"></i><span>Contact</span></a></li>
-                    <li class="nav-item">
-                        <a class="btn btn-cv" href="files/FaisalRaheemResume.pdf" target="_blank" rel="noopener">
-                            <i class="bi bi-download"></i><span>Resume</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
-                            <i class="bi bi-moon-stars-fill"></i>
-                        </button>
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1 mt-3 mt-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme"></button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- ==================== HERO ==================== -->
-    <header id="home" class="hero-section">
-        <div class="container">
-            <div class="row align-items-center gy-5">
-
-                <div class="col-lg-7">
-                    <div class="hero-badge">
+    <!-- HERO -->
+    <header id="home" class="hero">
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-7 text-center text-lg-start">
+                    <div class="hero-badge mb-4">
                         <span class="badge-dot"></span>
                         <span>Available for freelance & full-time</span>
                     </div>
 
-                    <p class="hero-eyebrow">// Hello World, I am</p>
+                    <p class="section-eyebrow mb-3">// HELLO, I AM</p>
 
-                    <h1 class="hero-title">
-                        <span class="line">Faisal Raheem</span>
-                        <span class="line gradient">Baloch</span>
+                    <h1 class="hero-title mb-3">
+                        Faisal Raheem<br>
+                        <span class="gradient-text">Baloch</span>
                     </h1>
 
-                    <div class="hero-role">
-                        <span class="role-static">I build&nbsp;</span>
-                        <span class="role-dynamic" id="roleText"></span>
-                        <span class="role-cursor">|</span>
-                    </div>
-
-                    <p class="hero-description">
-                        A passionate <strong>Software Engineer</strong> crafting elegant full-stack applications with
-                        <span class="highlight">.NET</span>, <span class="highlight">ASP.NET Core</span>,
-                        <span class="highlight">Angular</span> & <span class="highlight">React</span> — where clean
-                        architecture meets delightful user experience.
+                    <p class="fs-5 text-body-secondary mb-3" style="font-family: monospace;">
+                        I build <span id="roleText" class="text-primary fw-bold"></span><span class="role-cursor">|</span>
                     </p>
 
-                    <div class="hero-actions">
-                        <a href="#projects" class="btn btn-primary-custom">
-                            <span>Explore Work</span>
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                        <a href="#contact" class="btn btn-outline-custom">
-                            <i class="bi bi-chat-square-dots"></i>
-                            <span>Let's Connect</span>
-                        </a>
+                    <p class="text-body-secondary mb-4 mx-auto mx-lg-0" style="max-width: 600px;">
+                        A passionate <strong class="text-body">Software Engineer</strong> crafting elegant full-stack applications with
+                        <span class="text-primary fw-semibold">.NET</span>,
+                        <span class="text-primary fw-semibold">ASP.NET Core</span>,
+                        <span class="text-primary fw-semibold">Angular</span> &
+                        <span class="text-primary fw-semibold">React</span>.
+                    </p>
+
+                    <div class="hero-actions d-flex flex-wrap gap-3 mb-5 justify-content-center justify-content-lg-start">
+                        <a href="#projects" class="btn btn-primary btn-lg px-4">Explore Work →</a>
+                        <a href="#contact" class="btn btn-outline-secondary btn-lg px-4">Let's Connect</a>
                     </div>
 
-                    <div class="hero-meta">
-                        <div class="hero-socials">
-                            <a href="https://github.com/faisalraheem360" target="_blank" rel="noopener" aria-label="GitHub">
-                                <i class="bi bi-github"></i>
+                    <div class="hero-socials d-flex flex-wrap align-items-center gap-4 justify-content-center justify-content-lg-start">
+                        <div class="d-flex gap-2">
+                            <a href="https://github.com/faisalraheem360" target="_blank" class="social-btn" aria-label="GitHub">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
                             </a>
-                            <a href="https://pk.linkedin.com/in/faisal-raheem-baloch-b9725b244" target="_blank" rel="noopener" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin"></i>
+                            <a href="https://pk.linkedin.com/in/faisal-raheem-baloch-b9725b244" target="_blank" class="social-btn" aria-label="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
                             </a>
-                            <a href="mailto:faisalraheem432@gmail.com" aria-label="Email">
-                                <i class="bi bi-envelope-fill"></i>
+                            <a href="mailto:faisalraheem432@gmail.com" class="social-btn" aria-label="Email">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>
                             </a>
                         </div>
-
-                        <div class="hero-stats">
-                            <div class="hs-item">
-                                <strong>3+</strong>
-                                <span>Years</span>
-                            </div>
-                            <div class="hs-divider"></div>
-                            <div class="hs-item">
-                                <strong>15+</strong>
-                                <span>Projects</span>
-                            </div>
+                        <div class="hero-stats d-flex align-items-center gap-4 ps-lg-4">
+                            <div><div class="stat-number">3+</div><small class="text-body-secondary">Years</small></div>
+                            <div class="vr"></div>
+                            <div><div class="stat-number">15+</div><small class="text-body-secondary">Projects</small></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-5">
-                    <div class="hero-visual">
-                        <div class="visual-ring ring-1"></div>
-                        <div class="visual-ring ring-2"></div>
-                        <div class="visual-ring ring-3"></div>
-
-                        <div class="profile-card">
-                            <div class="profile-inner">
-                                <img src="images/Faisal.png" alt="Faisal Raheem Baloch" class="profile-img">
-                            </div>
-
-                            <div class="floating-chip chip-1">
-                                <i class="bi bi-code-slash"></i>
-                                <span>.NET</span>
-                            </div>
-                            <div class="floating-chip chip-2">
-                                <i class="bi bi-filetype-jsx"></i>
-                                <span>React</span>
-                            </div>
-                            <div class="floating-chip chip-3">
-                                <i class="bi bi-database"></i>
-                                <span>SQL</span>
-                            </div>
-                            <div class="floating-chip chip-4">
-                                <i class="bi bi-bootstrap"></i>
-                                <span>Angular</span>
-                            </div>
+                    <div class="profile-wrap d-flex justify-content-center position-relative">
+                        <img src="images/Faisal.png" alt="Faisal Raheem Baloch" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="profile-placeholder" style="display:none;">FRB</div>
+                        <div class="floating-chip chip-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"/></svg>
+                            .NET
+                        </div>
+                        <div class="floating-chip chip-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2"/><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg>
+                            React
+                        </div>
+                        <div class="floating-chip chip-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.318 2.687C.654 4.769 0 6.5 0 8s.654 3.231 4.318 5.313c1.696.926 4.014 1.687 7.682 1.687 1.348 0 2.6-.14 3.756-.377A1.002 1.002 0 0 0 16 13.65V2.35a1 1 0 0 0-.744-.973C14.1 1.14 12.848 1 11.5 1c-3.668 0-5.986.761-7.182 1.687z"/></svg>
+                            SQL
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
-        <a href="#about" class="scroll-down" aria-label="Scroll down">
-            <span class="mouse">
-                <span class="wheel"></span>
-            </span>
-            <span class="sd-text">Scroll</span>
-        </a>
     </header>
 
-    <!-- ==================== ABOUT (COLLAPSIBLE) ==================== -->
-    <section id="about" class="section">
-        <div class="container">
-
-            <div class="collapse-header" data-collapse="about">
-                <div class="ch-left">
-                    <span class="ch-index">01</span>
-                    <div>
-                        <p class="ch-eyebrow">About Me</p>
-                        <h2 class="ch-title">Who am <span class="gradient">I?</span></h2>
-                    </div>
-                </div>
-                <button class="ch-toggle" aria-label="Toggle About">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
+    <!-- ABOUT -->
+    <section id="about" class="py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5 reveal">
+                <p class="section-eyebrow mb-2">// 01. ABOUT ME</p>
+                <h2 class="section-title">Who am <span class="gradient-text">I?</span></h2>
             </div>
 
-            <div class="collapse-body" id="aboutBody">
-                <div class="collapse-inner">
-                    <div class="row gy-4 align-items-start">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-5 reveal">
+                    <h3 class="h4 fw-bold mb-3">Turning ideas into <span class="gradient-text">useful software</span>.</h3>
+                    <p class="text-body-secondary mb-3">I build reliable full-stack applications with a strong focus on clean architecture and maintainable code.</p>
+                    <p class="text-body-secondary mb-3">My work brings backend systems and polished frontend interfaces together.</p>
+                    <p class="text-body-secondary">Good software should be <strong class="text-body">simple to use</strong>, <strong class="text-body">easy to maintain</strong>, and <strong class="text-body">ready to grow</strong>.</p>
+                </div>
 
-                        <div class="col-lg-5">
-                            <div class="about-intro">
-                                <p class="lead-text">
-                                    Turning ideas into <span class="gradient">useful software</span> — one line at a time.
-                                </p>
-                                <p>
-                                    I build reliable full-stack applications with a strong focus on clean
-                                    architecture, practical user experiences, and maintainable code that
-                                    scales with your business.
-                                </p>
-                                <p>
-                                    My work brings backend systems and polished frontend interfaces together.
-                                    I enjoy working with APIs, databases, authentication, email systems,
-                                    dashboards, and responsive web applications.
-                                </p>
-                                <p>
-                                    I believe good software should be <strong>simple to use</strong>,
-                                    <strong>easy to maintain</strong>, and <strong>ready to grow</strong>.
-                                </p>
+                <div class="col-lg-7 reveal">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="card-premium p-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></div>
+                                    <div><small class="text-body-secondary d-block">Location</small><strong>Pakistan</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card-premium p-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.032a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3z"/></svg></div>
+                                    <div><small class="text-body-secondary d-block">Role</small><strong>Software Engineer</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card-premium p-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/></svg></div>
+                                    <div><small class="text-body-secondary d-block">Focus</small><strong>Full-Stack Dev</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card-premium p-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286H4.545z"/></svg></div>
+                                    <div><small class="text-body-secondary d-block">Languages</small><strong>EN / UR</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-5 bg-body-tertiary">
+        <div class="container py-4">
+            <div class="text-center mb-5 reveal">
+                <p class="section-eyebrow mb-2">// 02. MY TOOLKIT</p>
+                <h2 class="section-title">Technical <span class="gradient-text">Skills</span></h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4V2.667z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-1">Backend</h3>
+                        <p class="small text-body-secondary mb-3">Server-side engineering</p>
+                        <ul class="list-unstyled small text-body-secondary mb-0">
+                            <li class="mb-1">✓ C# / .NET 8</li>
+                            <li class="mb-1">✓ ASP.NET Core</li>
+                            <li class="mb-1">✓ Web API / REST</li>
+                            <li>✓ Entity Framework</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4l-1 2-1-2H2s-2 0-2-2V4z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-1">Frontend</h3>
+                        <p class="small text-body-secondary mb-3">User interface</p>
+                        <ul class="list-unstyled small text-body-secondary mb-0">
+                            <li class="mb-1">✓ Angular</li>
+                            <li class="mb-1">✓ React</li>
+                            <li class="mb-1">✓ JavaScript</li>
+                            <li>✓ HTML5 / CSS3</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.318 2.687C.654 4.769 0 6.5 0 8s.654 3.231 4.318 5.313c1.696.926 4.014 1.687 7.682 1.687 1.348 0 2.6-.14 3.756-.377A1.002 1.002 0 0 0 16 13.65V2.35a1 1 0 0 0-.744-.973C14.1 1.14 12.848 1 11.5 1c-3.668 0-5.986.761-7.182 1.687z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-1">Database</h3>
+                        <p class="small text-body-secondary mb-3">Data layer</p>
+                        <ul class="list-unstyled small text-body-secondary mb-0">
+                            <li class="mb-1">✓ SQL Server</li>
+                            <li class="mb-1">✓ Entity Framework</li>
+                            <li class="mb-1">✓ Redis Cache</li>
+                            <li>✓ DB Design</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0Z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-1">Tools</h3>
+                        <p class="small text-body-secondary mb-3">Workflow</p>
+                        <ul class="list-unstyled small text-body-secondary mb-0">
+                            <li class="mb-1">✓ Git / GitHub</li>
+                            <li class="mb-1">✓ Visual Studio</li>
+                            <li class="mb-1">✓ VS Code</li>
+                            <li>✓ Postman</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5 reveal">
+                <p class="section-eyebrow mb-2">// 03. PORTFOLIO</p>
+                <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 justify-content-center mb-4 reveal">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="dotnet">.NET</button>
+                <button class="filter-btn" data-filter="frontend">Frontend</button>
+            </div>
+
+            <div class="row g-4" id="projectGrid">
+                <div class="col-md-6 project-item reveal" data-category="dotnet">
+                    <div class="card-premium p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/></svg></div>
+                            <span class="text-body-secondary fw-bold">01</span>
+                        </div>
+                        <p class="section-eyebrow mb-2">LMS · .NET Core 8</p>
+                        <h3 class="h5 fw-bold mb-2">Atlantic International University LMS</h3>
+                        <p class="small text-body-secondary mb-3">Developed Email & Notification Modules using C# .NET Core 8.0 with SMTP, dynamic email templates, push notifications, and Excel report generation.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">C#</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">.NET 8</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">JavaScript</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">SMTP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 project-item reveal" data-category="dotnet">
+                    <div class="card-premium p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Z"/></svg></div>
+                            <span class="text-body-secondary fw-bold">02</span>
+                        </div>
+                        <p class="section-eyebrow mb-2">Management System</p>
+                        <h3 class="h5 fw-bold mb-2">Student Management System</h3>
+                        <p class="small text-body-secondary mb-3">Complete student management with information, schedules, grades, tutor management, login, and authentication.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">ASP.NET</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">C#</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">SQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 project-item reveal" data-category="dotnet">
+                    <div class="card-premium p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5z"/></svg></div>
+                            <span class="text-body-secondary fw-bold">03</span>
+                        </div>
+                        <p class="section-eyebrow mb-2">TMS · ASP.NET Core MVC</p>
+                        <h3 class="h5 fw-bold mb-2">Training Management System</h3>
+                        <p class="small text-body-secondary mb-3">TMS with student info, schedules, grades, email & notification modules, library navigation, and content uploads.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">ASP.NET Core</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">.NET 3.1</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">SMTP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 project-item reveal" data-category="frontend">
+                    <div class="card-premium p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6 .5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H9.5v.5a.5.5 0 0 1-1 0V1H6.5a.5.5 0 0 1-.5-.5z"/></svg></div>
+                            <span class="text-body-secondary fw-bold">04</span>
+                        </div>
+                        <p class="section-eyebrow mb-2">Frontend · API</p>
+                        <h3 class="h5 fw-bold mb-2">AI ChatBot Interface</h3>
+                        <p class="small text-body-secondary mb-3">Responsive AI chatbot interface with real-time messaging, dynamic responses, and smooth API integration.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">HTML</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">CSS</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">JavaScript</span>
+                            <span class="badge text-bg-primary-subtle text-primary-emphasis">API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-5 bg-body-tertiary">
+        <div class="container py-4">
+            <div class="text-center mb-5 reveal">
+                <p class="section-eyebrow mb-2">// 04. WHAT I DO</p>
+                <h2 class="section-title">Services <span class="gradient-text">Offered</span></h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-2">Full-Stack Development</h3>
+                        <p class="small text-body-secondary mb-0">Complete web applications using ASP.NET Core, Web API, Angular, React, and SQL Server.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-2">Frontend Development</h3>
+                        <p class="small text-body-secondary mb-0">Responsive, user-friendly interfaces using modern JavaScript frameworks.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6h-1A1.5 1.5 0 0 1 6 4.5v-1Z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-2">Backend & APIs</h3>
+                        <p class="small text-body-secondary mb-0">Secure, maintainable backend systems, REST APIs, and database integration.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.318 2.687C.654 4.769 0 6.5 0 8s.654 3.231 4.318 5.313c1.696.926 4.014 1.687 7.682 1.687 1.348 0 2.6-.14 3.756-.377A1.002 1.002 0 0 0 16 13.65V2.35a1 1 0 0 0-.744-.973C14.1 1.14 12.848 1 11.5 1c-3.668 0-5.986.761-7.182 1.687z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-2">Database Solutions</h3>
+                        <p class="small text-body-secondary mb-0">SQL Server database design, Entity Framework, and optimized queries.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555Z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-2">Email & Notifications</h3>
+                        <p class="small text-body-secondary mb-0">SMTP systems, dynamic email templates, and push notifications.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="card-premium p-4">
+                        <div class="icon-box mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/></svg></div>
+                        <h3 class="h5 fw-bold mb-2">Legacy Migration</h3>
+                        <p class="small text-body-secondary mb-0">Modernizing applications and migrating legacy modules to clean architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5 reveal">
+                <p class="section-eyebrow mb-2">// 05. GET IN TOUCH</p>
+                <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+                <p class="text-body-secondary mx-auto mt-3" style="max-width: 600px;">
+                    Have a project in mind? Fill the form below and I'll get back to you within 24 hours.
+                </p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-11 col-xl-10">
+                    <div class="row g-4">
+
+                        <div class="col-lg-5 reveal">
+                            <div class="contact-info-panel">
+                                <h3 class="h4 fw-bold mb-2">Let's talk about <span class="gradient-text">your project</span></h3>
+                                <p class="text-body-secondary mb-4 small">I'm always open to discussing new ideas.</p>
+
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="contact-info-card">
+                                        <div class="cic-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555Z"/></svg></div>
+                                        <div class="cic-body">
+                                            <span class="cic-label">Email</span>
+                                            <a href="mailto:faisalraheem432@gmail.com" class="cic-value text-decoration-none">faisalraheem432@gmail.com</a>
+                                        </div>
+                                        <button id="copyEmail" class="cic-copy" aria-label="Copy">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/></svg>
+                                        </button>
+                                    </div>
+
+                                    <a href="https://pk.linkedin.com/in/faisal-raheem-baloch-b9725b244" target="_blank" class="contact-info-card">
+                                        <div class="cic-icon cic-linkedin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248z"/></svg></div>
+                                        <div class="cic-body">
+                                            <span class="cic-label">LinkedIn</span>
+                                            <span class="cic-value">View Profile</span>
+                                        </div>
+                                        <span class="cic-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z"/></svg></span>
+                                    </a>
+
+                                    <a href="https://github.com/faisalraheem360" target="_blank" class="contact-info-card">
+                                        <div class="cic-icon cic-github"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></div>
+                                        <div class="cic-body">
+                                            <span class="cic-label">GitHub</span>
+                                            <span class="cic-value">View Projects</span>
+                                        </div>
+                                        <span class="cic-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z"/></svg></span>
+                                    </a>
+
+                                    <div class="contact-info-card">
+                                        <div class="cic-icon cic-location"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></div>
+                                        <div class="cic-body">
+                                            <span class="cic-label">Location</span>
+                                            <span class="cic-value">Pakistan</span>
+                                        </div>
+                                        <span class="cic-badge">Remote</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-7">
-                            <div class="about-grid">
-                                <div class="info-tile">
-                                    <div class="tile-icon"><i class="bi bi-geo-alt-fill"></i></div>
-                                    <div class="tile-body">
-                                        <span>Location</span>
-                                        <strong>Pakistan</strong>
-                                    </div>
-                                </div>
-                                <div class="info-tile">
-                                    <div class="tile-icon"><i class="bi bi-briefcase-fill"></i></div>
-                                    <div class="tile-body">
-                                        <span>Role</span>
-                                        <strong>Software Engineer</strong>
-                                    </div>
-                                </div>
-                                <div class="info-tile">
-                                    <div class="tile-icon"><i class="bi bi-mortarboard-fill"></i></div>
-                                    <div class="tile-body">
-                                        <span>Focus</span>
-                                        <strong>Full-Stack Dev</strong>
-                                    </div>
-                                </div>
-                                <div class="info-tile">
-                                    <div class="tile-icon"><i class="bi bi-translate"></i></div>
-                                    <div class="tile-body">
-                                        <span>Languages</span>
-                                        <strong>EN / UR</strong>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="about-highlights">
-                                <div class="highlight-card">
-                                    <i class="bi bi-check-circle-fill"></i>
+                        <div class="col-lg-7 reveal">
+                            <div class="contact-form-card">
+                                <div class="form-header">
+                                    <div class="form-header-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2z"/></svg></div>
                                     <div>
-                                        <strong>Clean Architecture</strong>
-                                        <span>Layered, testable, maintainable code</span>
+                                        <h3 class="h5 fw-bold mb-1">Send Me a Message</h3>
+                                        <p class="small text-body-secondary mb-0">I'll get back to you within 24 hours.</p>
                                     </div>
                                 </div>
-                                <div class="highlight-card">
-                                    <i class="bi bi-check-circle-fill"></i>
-                                    <div>
-                                        <strong>Full-Stack Delivery</strong>
-                                        <span>From database to pixel-perfect UI</span>
+
+                                <form id="contactForm" novalidate>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Your Name <span class="text-danger">*</span></label>
+                                            <div class="input-group-custom">
+                                                <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg></span>
+                                                <input type="text" id="cName" name="name" class="form-control" placeholder="John Doe" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Your Email <span class="text-danger">*</span></label>
+                                            <div class="input-group-custom">
+                                                <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555Z"/></svg></span>
+                                                <input type="email" id="cEmail" name="email" class="form-control" placeholder="john@example.com" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Subject <span class="text-danger">*</span></label>
+                                            <div class="input-group-custom">
+                                                <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2z"/></svg></span>
+                                                <input type="text" id="cSubject" name="subject" class="form-control" placeholder="Project Inquiry" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Message <span class="text-danger">*</span></label>
+                                            <div class="input-group-custom">
+                                                <span class="input-icon textarea-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2z"/></svg></span>
+                                                <textarea id="cMessage" name="message" class="form-control" rows="5" placeholder="Tell me about your project..." required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" id="sendBtn" class="btn-send-submit">
+                                                <span class="btn-send-icon-s">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="22" height="22"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
+                                                </span>
+                                                <span class="btn-send-text">
+                                                    <strong>Send Message</strong>
+                                                    <small>Direct to my inbox</small>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="highlight-card">
-                                    <i class="bi bi-check-circle-fill"></i>
-                                    <div>
-                                        <strong>Modern Stack</strong>
-                                        <span>.NET 8, Angular, React, SQL Server</span>
-                                    </div>
+                                </form>
+
+                                <div class="form-footer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524z"/><path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/></svg>
+                                    <span>Your information stays private. No spam.</span>
                                 </div>
                             </div>
                         </div>
@@ -307,453 +755,289 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- ==================== SKILLS (COLLAPSIBLE) ==================== -->
-    <section id="skills" class="section">
+    <!-- FOOTER -->
+    <footer class="py-4">
         <div class="container">
-
-            <div class="collapse-header" data-collapse="skills">
-                <div class="ch-left">
-                    <span class="ch-index">02</span>
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <span class="brand-mark">&lt;/&gt;</span>
                     <div>
-                        <p class="ch-eyebrow">My Toolkit</p>
-                        <h2 class="ch-title">Technical <span class="gradient">Skills</span></h2>
+                        <div class="fw-bold">Faisal Raheem Baloch</div>
+                        <small class="text-body-secondary">Software Engineer</small>
                     </div>
                 </div>
-                <button class="ch-toggle" aria-label="Toggle Skills">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
-            </div>
-
-            <div class="collapse-body" id="skillsBody">
-                <div class="collapse-inner">
-
-                    <div class="skills-grid">
-
-                        <div class="skill-panel">
-                            <div class="sp-header">
-                                <div class="sp-icon"><i class="bi bi-server"></i></div>
-                                <div>
-                                    <h3>Backend</h3>
-                                    <span>Server-side engineering</span>
-                                </div>
-                            </div>
-                            <div class="sp-bar"><span style="--w:95%"></span></div>
-                            <ul class="sp-list">
-                                <li>C# / .NET 8</li>
-                                <li>ASP.NET Core / MVC</li>
-                                <li>Web API / REST</li>
-                                <li>Razor Pages</li>
-                                <li>Entity Framework Core</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-panel">
-                            <div class="sp-header">
-                                <div class="sp-icon"><i class="bi bi-display"></i></div>
-                                <div>
-                                    <h3>Frontend</h3>
-                                    <span>User interface</span>
-                                </div>
-                            </div>
-                            <div class="sp-bar"><span style="--w:90%"></span></div>
-                            <ul class="sp-list">
-                                <li>Angular</li>
-                                <li>React</li>
-                                <li>JavaScript (ES6+)</li>
-                                <li>HTML5 / CSS3</li>
-                                <li>Bootstrap / Responsive</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-panel">
-                            <div class="sp-header">
-                                <div class="sp-icon"><i class="bi bi-database-check"></i></div>
-                                <div>
-                                    <h3>Database</h3>
-                                    <span>Data layer</span>
-                                </div>
-                            </div>
-                            <div class="sp-bar"><span style="--w:88%"></span></div>
-                            <ul class="sp-list">
-                                <li>SQL Server</li>
-                                <li>Entity Framework</li>
-                                <li>Redis Cache</li>
-                                <li>Query Optimization</li>
-                                <li>DB Design</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-panel">
-                            <div class="sp-header">
-                                <div class="sp-icon"><i class="bi bi-tools"></i></div>
-                                <div>
-                                    <h3>Tools</h3>
-                                    <span>Workflow</span>
-                                </div>
-                            </div>
-                            <div class="sp-bar"><span style="--w:92%"></span></div>
-                            <ul class="sp-list">
-                                <li>Git / GitHub</li>
-                                <li>Visual Studio</li>
-                                <li>VS Code</li>
-                                <li>Postman</li>
-                                <li>SSMS</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="tech-cloud">
-                        <span class="tech-pill">C#</span>
-                        <span class="tech-pill">.NET 8</span>
-                        <span class="tech-pill">ASP.NET Core</span>
-                        <span class="tech-pill">Angular</span>
-                        <span class="tech-pill">React</span>
-                        <span class="tech-pill">JavaScript</span>
-                        <span class="tech-pill">TypeScript</span>
-                        <span class="tech-pill">HTML5</span>
-                        <span class="tech-pill">CSS3</span>
-                        <span class="tech-pill">Bootstrap</span>
-                        <span class="tech-pill">SQL Server</span>
-                        <span class="tech-pill">Entity Framework</span>
-                        <span class="tech-pill">Redis</span>
-                        <span class="tech-pill">REST API</span>
-                        <span class="tech-pill">Git</span>
-                        <span class="tech-pill">GitHub</span>
-                        <span class="tech-pill">SMTP</span>
-                        <span class="tech-pill">jQuery</span>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ==================== PROJECTS (COLLAPSIBLE) ==================== -->
-    <section id="projects" class="section">
-        <div class="container">
-
-            <div class="collapse-header" data-collapse="projects">
-                <div class="ch-left">
-                    <span class="ch-index">03</span>
-                    <div>
-                        <p class="ch-eyebrow">Portfolio</p>
-                        <h2 class="ch-title">Featured <span class="gradient">Projects</span></h2>
-                    </div>
-                </div>
-                <button class="ch-toggle" aria-label="Toggle Projects">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
-            </div>
-
-            <div class="collapse-body" id="projectsBody">
-                <div class="collapse-inner">
-
-                    <div class="project-filters">
-                        <button class="filter-btn active" data-filter="all"><i class="bi bi-grid-3x3-gap-fill"></i> All</button>
-                        <button class="filter-btn" data-filter="dotnet"><i class="bi bi-server"></i> .NET</button>
-                        <button class="filter-btn" data-filter="frontend"><i class="bi bi-display"></i> Frontend</button>
-                    </div>
-
-                    <div class="row g-4" id="projectGrid">
-
-                        <!-- Project 1 -->
-                        <div class="col-md-6 project-item" data-category="dotnet">
-                            <article class="project-card">
-                                <div class="pc-glow"></div>
-                                <header class="pc-head">
-                                    <div class="pc-icon"><i class="bi bi-mortarboard-fill"></i></div>
-                                    <span class="pc-num">01</span>
-                                </header>
-                                <p class="pc-type">LMS · .NET Core 8</p>
-                                <h3 class="pc-title">Atlantic International University LMS</h3>
-                                <p class="pc-desc">
-                                    Developed Email & Notification Modules using C# .NET Core 8.0 and JavaScript.
-                                    Implemented SMTP, dynamic email templates, push notifications, file management,
-                                    Excel reading, and report generation.
-                                </p>
-                                <ul class="pc-features">
-                                    <li>Email & notification modules</li>
-                                    <li>SMTP + email templates</li>
-                                    <li>Push notifications</li>
-                                    <li>Kendo File Manager</li>
-                                    <li>Excel report generation</li>
-                                    <li>Legacy module migration</li>
-                                </ul>
-                                <div class="pc-tech">
-                                    <span>C#</span><span>.NET 8</span><span>JavaScript</span><span>SMTP</span>
-                                </div>
-                            </article>
-                        </div>
-
-                        <!-- Project 2 -->
-                        <div class="col-md-6 project-item" data-category="dotnet">
-                            <article class="project-card">
-                                <div class="pc-glow"></div>
-                                <header class="pc-head">
-                                    <div class="pc-icon"><i class="bi bi-people-fill"></i></div>
-                                    <span class="pc-num">02</span>
-                                </header>
-                                <p class="pc-type">Management System</p>
-                                <h3 class="pc-title">Student Management System</h3>
-                                <p class="pc-desc">
-                                    A complete student management application for handling student information,
-                                    schedules, grades, tutor management, login, and secure authentication.
-                                </p>
-                                <ul class="pc-features">
-                                    <li>Student information management</li>
-                                    <li>Schedules & grades</li>
-                                    <li>Tutor management module</li>
-                                    <li>Login & authentication</li>
-                                    <li>Architecture improvement</li>
-                                </ul>
-                                <div class="pc-tech">
-                                    <span>ASP.NET</span><span>.NET Framework</span><span>C#</span><span>SQL</span>
-                                </div>
-                            </article>
-                        </div>
-
-                        <!-- Project 3 -->
-                        <div class="col-md-6 project-item" data-category="dotnet">
-                            <article class="project-card">
-                                <div class="pc-glow"></div>
-                                <header class="pc-head">
-                                    <div class="pc-icon"><i class="bi bi-journal-text"></i></div>
-                                    <span class="pc-num">03</span>
-                                </header>
-                                <p class="pc-type">TMS · ASP.NET Core MVC</p>
-                                <h3 class="pc-title">Training Management System</h3>
-                                <p class="pc-desc">
-                                    A Training Management System with student info, schedules, grades, email and
-                                    notification modules, library navigation, content uploads, and file operations.
-                                </p>
-                                <ul class="pc-features">
-                                    <li>Student & schedule management</li>
-                                    <li>Grades & academic info</li>
-                                    <li>Email & push notifications</li>
-                                    <li>Library navigation</li>
-                                    <li>Content upload / file ops</li>
-                                    <li>Excel functionality</li>
-                                </ul>
-                                <div class="pc-tech">
-                                    <span>ASP.NET Core MVC</span><span>.NET 3.1</span><span>SMTP</span><span>JavaScript</span>
-                                </div>
-                            </article>
-                        </div>
-
-                        <!-- Project 4 -->
-                        <div class="col-md-6 project-item" data-category="frontend">
-                            <article class="project-card">
-                                <div class="pc-glow"></div>
-                                <header class="pc-head">
-                                    <div class="pc-icon"><i class="bi bi-robot"></i></div>
-                                    <span class="pc-num">04</span>
-                                </header>
-                                <p class="pc-type">Frontend · API Integration</p>
-                                <h3 class="pc-title">AI ChatBot Interface</h3>
-                                <p class="pc-desc">
-                                    A responsive AI chatbot interface built with HTML, CSS & JavaScript featuring
-                                    real-time messaging, dynamic responses, and smooth API integration.
-                                </p>
-                                <ul class="pc-features">
-                                    <li>Responsive chatbot UI</li>
-                                    <li>Real-time message display</li>
-                                    <li>Dynamic responses</li>
-                                    <li>API integration</li>
-                                    <li>Mobile-friendly layout</li>
-                                </ul>
-                                <div class="pc-tech">
-                                    <span>HTML</span><span>CSS</span><span>JavaScript</span><span>API</span>
-                                </div>
-                            </article>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ==================== SERVICES (COLLAPSIBLE) ==================== -->
-    <section id="services" class="section">
-        <div class="container">
-
-            <div class="collapse-header" data-collapse="services">
-                <div class="ch-left">
-                    <span class="ch-index">04</span>
-                    <div>
-                        <p class="ch-eyebrow">What I Do</p>
-                        <h2 class="ch-title">Services <span class="gradient">Offered</span></h2>
-                    </div>
-                </div>
-                <button class="ch-toggle" aria-label="Toggle Services">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
-            </div>
-
-            <div class="collapse-body" id="servicesBody">
-                <div class="collapse-inner">
-
-                    <div class="services-grid">
-
-                        <div class="service-item">
-                            <div class="si-num">01</div>
-                            <div class="si-icon"><i class="bi bi-code-square"></i></div>
-                            <h3>Full-Stack Development</h3>
-                            <p>Complete web applications using ASP.NET Core, Web API, Angular, React, and SQL Server.</p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="si-num">02</div>
-                            <div class="si-icon"><i class="bi bi-window"></i></div>
-                            <h3>Frontend Development</h3>
-                            <p>Responsive, user-friendly interfaces using Angular, React, JavaScript, HTML, CSS & Bootstrap.</p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="si-num">03</div>
-                            <div class="si-icon"><i class="bi bi-diagram-3"></i></div>
-                            <h3>Backend & APIs</h3>
-                            <p>Secure, maintainable backend systems, REST APIs, authentication & database integration.</p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="si-num">04</div>
-                            <div class="si-icon"><i class="bi bi-database"></i></div>
-                            <h3>Database Solutions</h3>
-                            <p>SQL Server database design, Entity Framework, optimized queries, relationships & data management.</p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="si-num">05</div>
-                            <div class="si-icon"><i class="bi bi-envelope-paper"></i></div>
-                            <h3>Email & Notifications</h3>
-                            <p>SMTP email systems, dynamic email templates, notification modules & push notifications.</p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="si-num">06</div>
-                            <div class="si-icon"><i class="bi bi-arrow-repeat"></i></div>
-                            <h3>Legacy Migration</h3>
-                            <p>Modernizing existing applications & migrating legacy modules toward clean layered architecture.</p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ==================== CONTACT (COLLAPSIBLE) ==================== -->
-    <section id="contact" class="section">
-        <div class="container">
-
-            <div class="collapse-header" data-collapse="contact">
-                <div class="ch-left">
-                    <span class="ch-index">05</span>
-                    <div>
-                        <p class="ch-eyebrow">Get In Touch</p>
-                        <h2 class="ch-title">Let's <span class="gradient">Connect</span></h2>
-                    </div>
-                </div>
-                <button class="ch-toggle" aria-label="Toggle Contact">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
-            </div>
-
-            <div class="collapse-body" id="contactBody">
-                <div class="collapse-inner">
-
-                    <div class="contact-grid">
-
-                        <div class="contact-info">
-                            <p class="contact-lead">
-                                Have a project in mind? Let's build something <span class="gradient">extraordinary</span> together.
-                            </p>
-
-                            <div class="contact-list">
-
-                                <div class="contact-row">
-                                    <div class="cr-icon"><i class="bi bi-envelope-fill"></i></div>
-                                    <div class="cr-body">
-                                        <span>Email</span>
-                                        <a href="mailto:faisalraheem432@gmail.com" id="emailAddress">faisalraheem432@gmail.com</a>
-                                    </div>
-                                    <button id="copyEmail" class="cr-copy" type="button" aria-label="Copy email">
-                                        <i class="bi bi-copy"></i>
-                                    </button>
-                                </div>
-
-                                <div class="contact-row">
-                                    <div class="cr-icon"><i class="bi bi-linkedin"></i></div>
-                                    <div class="cr-body">
-                                        <span>LinkedIn</span>
-                                        <a href="https://pk.linkedin.com/in/faisal-raheem-baloch-b9725b244" target="_blank" rel="noopener">View Profile</a>
-                                    </div>
-                                </div>
-
-                                <div class="contact-row">
-                                    <div class="cr-icon"><i class="bi bi-github"></i></div>
-                                    <div class="cr-body">
-                                        <span>GitHub</span>
-                                        <a href="https://github.com/faisalraheem360" target="_blank" rel="noopener">View Projects</a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <p id="copyMessage" class="copy-msg"></p>
-                        </div>
-
-                        <div class="contact-cta">
-                            <div class="cta-card">
-                                <div class="cta-glow"></div>
-                                <i class="bi bi-rocket-takeoff cta-icon"></i>
-                                <h3>Ready to start?</h3>
-                                <p>Drop me a line and let's discuss how I can help bring your idea to life.</p>
-                                <a href="mailto:faisalraheem432@gmail.com" class="btn btn-primary-custom w-100">
-                                    <i class="bi bi-send-fill"></i> Send Message
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="fc-left">
-                    <div class="fc-logo">&lt;/&gt;</div>
-                    <div>
-                        <strong>Faisal Raheem Baloch</strong>
-                        <small>Software Engineer</small>
-                    </div>
-                </div>
-
-                <p class="fc-copy">© <span id="currentYear"></span> Faisal Raheem Baloch. Crafted with <i class="bi bi-heart-fill"></i> passion.</p>
-
-                <a href="#home" class="back-to-top" id="backToTop" aria-label="Back to top">
-                    <i class="bi bi-arrow-up"></i>
-                </a>
+                <p class="text-body-secondary small mb-0 text-center">© <span id="currentYear"></span> Faisal Raheem Baloch. Crafted with <span style="color:#dc3545;">♥</span> passion.</p>
+                <button id="backToTop" class="back-to-top" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></button>
             </div>
         </div>
     </footer>
 
-  <script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/script.js"></script>
+    <!-- SUCCESS TOAST -->
+    <div id="successToast" class="success-toast" role="alert" aria-live="polite">
+        <div class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg>
+        </div>
+        <div class="toast-content">
+            <div class="toast-title">Message Sent Successfully!</div>
+            <div class="toast-message">Thanks for reaching out. I'll reply within 24 hours.</div>
+        </div>
+        <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></svg>
+        </button>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        "use strict";
+
+        /* ========== FORCE HOME ON LOAD ========== */
+        (function () {
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+            window.scrollTo(0, 0);
+            if (window.location.hash) history.replaceState(null, null, window.location.pathname);
+            window.addEventListener('load', () => {
+                window.scrollTo(0, 0);
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#home');
+                });
+            });
+        })();
+
+        /* ========== SCROLL PROGRESS ========== */
+        const scrollProgress = document.getElementById("scrollProgress");
+        window.addEventListener("scroll", () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+            scrollProgress.style.width = pct + "%";
+        }, { passive: true });
+
+        /* ========== NAVBAR SCROLL ========== */
+        const navbar = document.getElementById("mainNavbar");
+        window.addEventListener("scroll", () => {
+            navbar.classList.toggle("scrolled", window.scrollY > 40);
+        }, { passive: true });
+
+        /* ========== BACK TO TOP ========== */
+        const backToTop = document.getElementById("backToTop");
+        window.addEventListener("scroll", () => {
+            backToTop.classList.toggle("show", window.scrollY > 500);
+        }, { passive: true });
+        backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        /* ========== THEME TOGGLE ========== */
+        const themeToggle = document.getElementById("themeToggle");
+        const MOON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>';
+        const SUN_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>';
+
+        function getTheme() { try { return localStorage.getItem("frb-theme") || "light"; } catch { return "light"; } }
+        function setTheme(t) {
+            document.documentElement.setAttribute("data-bs-theme", t);
+            try { localStorage.setItem("frb-theme", t); } catch {}
+            themeToggle.innerHTML = t === "dark" ? SUN_SVG : MOON_SVG;
+        }
+        setTheme(getTheme());
+        themeToggle.addEventListener("click", () => {
+            setTheme(document.documentElement.getAttribute("data-bs-theme") === "dark" ? "light" : "dark");
+        });
+
+        /* ========== TYPEWRITER ========== */
+        const roles = ["scalable web apps", "clean architectures", "modern experiences", "reliable APIs"];
+        const roleText = document.getElementById("roleText");
+        let rIdx = 0, cIdx = 0, deleting = false;
+        function typeRole() {
+            const current = roles[rIdx];
+            roleText.textContent = deleting ? current.substring(0, cIdx - 1) : current.substring(0, cIdx + 1);
+            cIdx += deleting ? -1 : 1;
+            let speed = deleting ? 40 : 80;
+            if (!deleting && cIdx === current.length) { speed = 1800; deleting = true; }
+            else if (deleting && cIdx === 0) { deleting = false; rIdx = (rIdx + 1) % roles.length; speed = 400; }
+            setTimeout(typeRole, speed);
+        }
+        setTimeout(typeRole, 1200);
+
+        /* ========== PROJECT FILTERS ========== */
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const filter = btn.dataset.filter;
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                document.querySelectorAll(".project-item").forEach(item => {
+                    const show = filter === "all" || item.dataset.category.includes(filter);
+                    item.style.display = show ? "" : "none";
+                });
+            });
+        });
+
+        /* ========== SCROLL REVEAL ========== */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add("show"); revealObserver.unobserve(e.target); }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+        /* ========== ACTIVE NAV ========== */
+        const sections = document.querySelectorAll("section[id], header[id]");
+        const navLinks = document.querySelectorAll(".nav-link");
+        window.addEventListener("scroll", () => {
+            let current = "home";
+            sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 120) current = sec.id; });
+            navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + current));
+        }, { passive: true });
+
+        /* ========== FOOTER YEAR ========== */
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+        const successToast = document.getElementById("successToast");
+        function showToast(title, message, type = "success") {
+            if (!successToast) return;
+            const titleEl = successToast.querySelector(".toast-title");
+            const msgEl = successToast.querySelector(".toast-message");
+            const iconEl = successToast.querySelector(".toast-icon");
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+            if (type === "warning") {
+                iconEl.style.background = "linear-gradient(135deg, #ffc107, #fd7e14)";
+            } else {
+                iconEl.style.background = "linear-gradient(135deg, #198754, #20c997)";
+            }
+            successToast.classList.add("show");
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => successToast.classList.remove("show"), 5000);
+        }
+        successToast?.querySelector(".toast-close")?.addEventListener("click", () => {
+            successToast.classList.remove("show");
+            clearTimeout(window._toastTimer);
+        });
+
+        /* =====================================================
+           CONTACT FORM — FormSubmit.co (Background Send)
+        ===================================================== */
+        const MY_EMAIL = "faisalraheem432@gmail.com";
+        const FORMSUBMIT_URL = "https://formsubmit.co/ajax/" + MY_EMAIL;
+
+        const contactForm = document.getElementById("contactForm");
+        const sendBtn = document.getElementById("sendBtn");
+
+        const SEND_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="22" height="22"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>';
+        const CHECK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="22" height="22"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg>';
+        const LOADER = '<span class="spinner-loader"></span>';
+
+        function validateForm() {
+            const name = document.getElementById("cName").value.trim();
+            const email = document.getElementById("cEmail").value.trim();
+            const subject = document.getElementById("cSubject").value.trim();
+            const message = document.getElementById("cMessage").value.trim();
+
+            if (!name || !email || !subject || !message) {
+                showToast("Missing Information", "Please fill in all required fields.", "warning");
+                return null;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast("Invalid Email", "Please enter a valid email address.", "warning");
+                return null;
+            }
+            return { name, email, subject, message };
+        }
+
+        contactForm?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const data = validateForm();
+            if (!data) return;
+
+            // Loading state
+            sendBtn.classList.add("loading");
+            sendBtn.querySelector(".btn-send-icon-s").innerHTML = LOADER;
+            sendBtn.querySelector(".btn-send-text strong").textContent = "Sending...";
+            sendBtn.querySelector(".btn-send-text small").textContent = "Please wait";
+
+            try {
+                const response = await fetch(FORMSUBMIT_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: data.name,
+                        email: data.email,
+                        subject: data.subject,
+                        message: data.message,
+                        _subject: "Portfolio Contact: " + data.subject,
+                        _template: "table",
+                        _captcha: "false"
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success !== false) {
+                    // Success state
+                    sendBtn.classList.remove("loading");
+                    sendBtn.classList.add("success");
+                    sendBtn.querySelector(".btn-send-icon-s").innerHTML = CHECK_ICON;
+                    sendBtn.querySelector(".btn-send-text strong").textContent = "Sent Successfully!";
+                    sendBtn.querySelector(".btn-send-text small").textContent = "I'll reply soon";
+
+                    showToast(
+                        "Message Sent Successfully!",
+                        "Thanks for reaching out. I'll reply within 24 hours.",
+                        "success"
+                    );
+
+                    contactForm.reset();
+
+                    setTimeout(() => {
+                        sendBtn.classList.remove("success");
+                        sendBtn.querySelector(".btn-send-icon-s").innerHTML = SEND_ICON;
+                        sendBtn.querySelector(".btn-send-text strong").textContent = "Send Message";
+                        sendBtn.querySelector(".btn-send-text small").textContent = "Direct to my inbox";
+                    }, 4000);
+                } else {
+                    throw new Error("Send failed");
+                }
+            } catch (err) {
+                sendBtn.classList.remove("loading");
+                sendBtn.querySelector(".btn-send-icon-s").innerHTML = SEND_ICON;
+                sendBtn.querySelector(".btn-send-text strong").textContent = "Send Message";
+                sendBtn.querySelector(".btn-send-text small").textContent = "Direct to my inbox";
+
+                showToast(
+                    "Something went wrong",
+                    "Please try again or email me directly at " + MY_EMAIL,
+                    "warning"
+                );
+            }
+        });
+
+        /* =====================================================
+           COPY EMAIL
+        ===================================================== */
+        document.getElementById("copyEmail")?.addEventListener("click", async () => {
+            const btn = document.getElementById("copyEmail");
+            try {
+                await navigator.clipboard.writeText(MY_EMAIL);
+                btn.classList.add("success");
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="width:18px;height:18px;"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg>';
+                showToast("Email Copied!", "Email copied to clipboard.", "success");
+            } catch {
+                showToast("Copy Failed", "Email: " + MY_EMAIL, "warning");
+            }
+            setTimeout(() => {
+                btn.classList.remove("success");
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="width:18px;height:18px;"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/></svg>';
+            }, 2500);
+        });
+    </script>
 
 </body>
 </html>
