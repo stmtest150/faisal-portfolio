@@ -7,7 +7,7 @@
     <meta name="author" content="Faisal Raheem Baloch">
     <meta name="theme-color" content="#ffffff">
     <title>Faisal Raheem Baloch — Software Engineer</title>
-
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -921,8 +921,8 @@
         /* =====================================================
            CONTACT FORM — FormSubmit.co (Background Send)
         ===================================================== */
-        const MY_EMAIL = "faisalraheem432@gmail.com";
-        const FORMSUBMIT_URL = "https://formsubmit.co/" + MY_EMAIL;
+const MY_EMAIL = "faisalraheem432@gmail.com";  // reply-to ke liye
+const FORMSUBMIT_URL = "https://formsubmit.co/ajax/b2f4b54bf180b0799d5e6a198d87a05f";
 
         const contactForm = document.getElementById("contactForm");
         const sendBtn = document.getElementById("sendBtn");
@@ -974,7 +974,9 @@
                         message: data.message,
                         _subject: "Portfolio Contact: " + data.subject,
                         _template: "table",
-                        _captcha: "false"
+                        _captcha: "false",
+                        _replyto: data.email,
+                        _autoresponse: "Hi " + data.name + ",\n\nThank you for contacting me! I received your message and will reply within 24 hours.\n\nBest regards,\nFaisal Raheem Baloch"
                     })
                 });
 
